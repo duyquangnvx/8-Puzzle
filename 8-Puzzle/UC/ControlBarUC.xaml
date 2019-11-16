@@ -1,0 +1,87 @@
+﻿<UserControl x:Class="_8_Puzzle.UC.ControlBarUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:_8_Puzzle.UC"
+             mc:Ignorable="d" 
+             
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"     
+             
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="13"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             Background="{DynamicResource MaterialDesignPaper}"
+             FontFamily="{DynamicResource MaterialDesignFont}"
+             
+             x:Name="ucControlBar">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="MouseLeftButtonDown">
+            <i:InvokeCommandAction Command="{Binding MouseMoveWindowCommand}" CommandParameter="{Binding ElementName=ucControlBar}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid Height="30" Background="{DynamicResource SecondaryAccentBrush}" >
+        <DockPanel Margin="10 0 10 0" LastChildFill="False">
+            <StackPanel
+                DockPanel.Dock="Left"
+                Orientation="Horizontal"
+                VerticalAlignment="Center">
+                <TextBlock 
+                    Foreground="White" 
+                    Text="{Binding Tag, ElementName=ucControlBar}"
+                    FontWeight="Bold">
+                </TextBlock>
+            </StackPanel>
+
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                <Button 
+                    Height="30"
+                    Width="30"
+                    Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"                        
+                    Background="{x:Null}"
+                    BorderBrush="{x:Null}"
+                    Foreground="White"
+                    VerticalAlignment="Center"
+                    Command="{Binding MinimizeWindowCommand}"                    
+                    CommandParameter="{Binding ElementName=ucControlBar}"                 
+                    ToolBar.OverflowMode="AsNeeded">
+                    <materialDesign:PackIcon Kind="WindowMinimize" />
+                </Button>
+
+                <Button 
+                    Height="30"
+                    Width="30"
+                    Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                    Background="{x:Null}"
+                    BorderBrush="{x:Null}"
+                    Foreground="White"
+                    VerticalAlignment="Center"
+                    Command="{Binding MaximizeWindowCommand}" 
+                    CommandParameter="{Binding ElementName=ucControlBar}"
+                    ToolBar.OverflowMode="AsNeeded"
+                    Content="{Binding MaximizeIcon}">
+                    
+                </Button>
+
+                <Button
+                    Height="30"
+                    Width="30"
+                    Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                    Background="{x:Null}"
+                    BorderBrush="{x:Null}"
+                    Foreground="White"
+                    VerticalAlignment="Center"
+                    Command="{Binding CloseWindowCommand}" 
+                    CommandParameter="{Binding ElementName=ucControlBar}"
+                    ToolBar.OverflowMode="AsNeeded" >
+                    <materialDesign:PackIcon Kind="WindowClose"/>
+                </Button>
+            </StackPanel>
+        </DockPanel>
+    </Grid>
+</UserControl>
+
