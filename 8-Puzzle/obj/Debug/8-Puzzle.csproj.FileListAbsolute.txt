@@ -28,3 +28,34 @@ D:\Deadline Trên Lớp\Học Kỳ 5\Lập Trình Windows\Đồ án 02 - Puzzle\
 D:\Deadline Trên Lớp\Học Kỳ 5\Lập Trình Windows\Đồ án 02 - Puzzle\Project\8-Puzzle\8-Puzzle\obj\Debug\8-Puzzle.csproj.CopyComplete
 D:\Deadline Trên Lớp\Học Kỳ 5\Lập Trình Windows\Đồ án 02 - Puzzle\Project\8-Puzzle\8-Puzzle\obj\Debug\8-Puzzle.exe
 D:\Deadline Trên Lớp\Học Kỳ 5\Lập Trình Windows\Đồ án 02 - Puzzle\Project\8-Puzzle\8-Puzzle\obj\Debug\8-Puzzle.pdb
+D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\bin\Debug\8-Puzzle.exe.config
+D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\bin\Debug\8-Puzzle.exe
+D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\bin\Debug\8-Puzzle.pdb
+D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\bin\Debug\MaterialDesignColors.dll
+D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\bin\Debug\MaterialDesignThemes.Wpf.dll
+D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\bin\Debug\Microsoft.Expression.Interactions.dll
+D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\bin\Debug\System.Windows.Interactivity.dll
+D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\bin\Debug\MaterialDesignColors.pdb
+D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\bin\Debug\MaterialDesignThemes.Wpf.pdb
+D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\bin\Debug\MaterialDesignThemes.Wpf.xml
+D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\bin\Debug\Microsoft.Expression.Interactions.xml
+D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\bin\Debug\System.Windows.Interactivity.xml
+D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\obj\Debug\8-Puzzle.csprojAssemblyReference.cache
+D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\obj\Debug\MainWindow.g.cs
+D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\obj\Debug\UC\ControlBarUC.g.cs
+D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\obj\Debug\App.g.cs
+D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\obj\Debug\GeneratedInternalTypeHelper.g.cs
+D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\obj\Debug\8-Puzzle_MarkupCompile.cache
+D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\obj\Debug\8-Puzzle_MarkupCompile.lref
+D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\obj\Debug\App.baml
+D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\obj\Debug\MainWindow.baml
+D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\obj\Debug\Resource\Resource.baml
+D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\obj\Debug\UC\ControlBarUC.baml
+D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\obj\Debug\8-Puzzle.g.resources
+D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\obj\Debug\_8_Puzzle.Properties.Resources.resources
+D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\obj\Debug\8-Puzzle.csproj.GenerateResource.cache
+D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\obj\Debug\8-Puzzle.csproj.CoreCompileInputs.cache
+D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\obj\Debug\8-Puzzle.csproj.CopyComplete
+D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\obj\Debug\8-Puzzle.exe
+D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\obj\Debug\8-Puzzle.pdb
+D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\bin\Debug\Image\templateImage.jpg

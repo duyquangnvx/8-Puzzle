@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_8_Puzzle"
         mc:Ignorable="d"
-        
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:uc="clr-namespace:_8_Puzzle.UC"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -19,15 +19,96 @@
         ResizeMode="NoResize"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"  
-        
-        Title="MainWindow" Height="450" Width="800">
+
+        Name="MainWd"
+        Title="8 Puzzle" Height="700" Width="1050">
     <DockPanel>
+        <!-- Title Bar -->
         <Grid DockPanel.Dock="Top">
             <uc:ControlBarUC Tag="{Binding ElementName=MainWd, Path=Title}"/>
         </Grid>
 
-        <Grid>
-            
+        <!-- Client -->
+        <Grid DockPanel.Dock="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="400"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Panel chứa 9 hình và Progress Bar -->
+            <Grid Grid.Column="0" Background="#FFCFCFCF">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+
+                <!-- Canvas Chứa 9 hình -->
+                <Canvas x:Name="ImagesCanvas"
+                        
+                        Grid.Row="0" Margin="10">
+                    <Canvas.Resources>
+                        <Style TargetType="Image">
+                            <Setter Property="MaxWidth" Value="200"/>
+                            <Setter Property="MaxHeight" Value="200"/>
+                        </Style>
+                    </Canvas.Resources>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseLeftButtonDown">
+                            <i:InvokeCommandAction Command="{Binding MouseMoveImageCommand}"
+                                                   />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    
+                    <Image x:Name="previewImage"/>
+                </Canvas>
+
+                <!-- ProgressBar -->
+                <Grid Grid.Row="1">
+                    <materialDesign:Card Margin="10 0 10 0" VerticalAlignment="Center" >
+                        <ProgressBar Maximum="{Binding ProgressMaximum}" Value="{Binding ProgressValue}" Height="10"/>
+                    </materialDesign:Card>
+                </Grid>
+            </Grid>
+
+            <!-- Panel Control, Width = 400 -->
+            <StackPanel Grid.Column="1">
+                <StackPanel.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="LightGray" Offset="1"/>
+                        <GradientStop Color="#FFE6E6E6"/>
+                    </LinearGradientBrush>
+                </StackPanel.Background>
+
+                <StackPanel.Effect>
+                    <DropShadowEffect BlurRadius="20" Color="#FFDEDEDE" RenderingBias="Quality" ShadowDepth="1"/>
+                </StackPanel.Effect>
+
+                <materialDesign:Card Height="300" Margin="10">
+                    <Image Margin="5" Source="{Binding TemplateImagePath}" Stretch="Fill"/>
+                </materialDesign:Card>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Margin="10"
+                            Background="#FF6F96E4" 
+                            BorderBrush="#FF6F96E4"
+                            Command="{Binding NewGameCommand}"
+                            CommandParameter="{Binding ElementName=ImagesCanvas}"
+                            >
+                        <Grid Width="150">
+                            <materialDesign:PackIcon Kind="GamepadVariant" VerticalAlignment="Center"/>
+                            <TextBlock Text="NEW GAME" HorizontalAlignment="Center"></TextBlock>
+                        </Grid>
+                    </Button>
+
+                </Grid>
+
+            </StackPanel>
+
         </Grid>
     </DockPanel>
 </Window>
