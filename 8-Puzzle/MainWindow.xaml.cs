@@ -3,6 +3,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -49,6 +50,7 @@ namespace _8_Puzzle
 
         #region Command
         public ICommand NewGameCommand { get; set; }
+        public ICommand SaveGameCommand { get; set; }
         public ICommand MouseMoveImageCommand { get; set; }
         #endregion
 
@@ -122,6 +124,37 @@ namespace _8_Puzzle
                     });
                     progress.IsBackground = true;
                     progress.Start();
+                    SaveGameCommand = new RelayCommand<Canvas>((k) => { return GameState == GAME_RUNNING; }, (k) =>
+                    {
+                        progress.Abort();
+                        p.Children.Clear();
+                        const string filename = "save.txt";
+                        var writer = new StreamWriter(filename);
+                        writer.WriteLine(ProgressValue);
+                        for (int i = 0; i < ROWS; i++)
+                        {
+                            for (int j = 0; j < COLUMNS; j++)
+                            {
+                                if (ArrayImage[i, j] != null)
+                                {
+                                    writer.Write($"{ArrayImage[i, j].Index}");
+                                }
+                                else
+                                {
+                                    writer.Write(" ");
+                                }
+                                if (j != 2)
+                                {
+                                    writer.Write(" ");
+                                }
+                                
+                            }
+                            writer.WriteLine("");
+                        }
+                        writer.Close();
+
+                        MessageBox.Show("Game is saved");
+                    });
                 }   
             });
         } 
