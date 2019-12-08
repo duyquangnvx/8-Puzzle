@@ -158,6 +158,8 @@ namespace _8_Puzzle
                     images[currentRow, currentColumn].Image.MouseLeftButtonDown += CropImage_MouseLeftButtonDown;
                     images[currentRow, currentColumn].Image.MouseLeftButtonUp += CropImage_PreviewMouseLeftButtonUp;
 
+                    Canvas.SetZIndex(images[currentRow, currentColumn].Image, 0);
+
                 }
             }
 
@@ -184,11 +186,12 @@ namespace _8_Puzzle
             if (distanceX >= -1 && distanceX <= 1 && distanceY == 0)
             {
                 isDragging = true;
+                Canvas.SetZIndex(ArrayImage[Convert.ToInt32(_currentPos.Y), Convert.ToInt32(_currentPos.X)].Image, 1);
             }
             else if (distanceY >= -1 && distanceY <= 1 && distanceX == 0)
             {
                 isDragging = true;
-                Canvas.SetZIndex(ArrayImage[Convert.ToInt32(_currentPos.Y), Convert.ToInt32(_currentPos.X)].Image, 100);
+                Canvas.SetZIndex(ArrayImage[Convert.ToInt32(_currentPos.Y), Convert.ToInt32(_currentPos.X)].Image, 1);
             }
 
 
@@ -196,11 +199,13 @@ namespace _8_Puzzle
 
         private void CropImage_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            
+
             if (isDragging == true)
             {
 
+                Canvas.SetZIndex(ArrayImage[Convert.ToInt32(_currentPos.Y), Convert.ToInt32(_currentPos.X)].Image, 0);
                 isDragging = false;
+                Mouse.OverrideCursor = Cursors.Arrow;
 
                 //var animation = new DoubleAnimation();
                 //animation.From = 200;
@@ -216,7 +221,6 @@ namespace _8_Puzzle
                 //Storyboard.SetTargetProperty(animation, new PropertyPath(Canvas.LeftProperty));
                 //story.Begin(this);
 
-                //Mouse.OverrideCursor = Cursors.Arrow;
                 var position = e.GetPosition(this);
 
                 //int x = (int)(position.X - startX) / (width + 2) * (width + 2) + startX;
@@ -251,7 +255,7 @@ namespace _8_Puzzle
 
             if (isDragging)
             {
-                //Mouse.OverrideCursor = Cursors.None;
+                Mouse.OverrideCursor = Cursors.Hand;
                 var position = e.GetPosition(this);
 
                 var dx = position.X;
@@ -262,12 +266,61 @@ namespace _8_Puzzle
                     Canvas.SetLeft(ArrayImage[Convert.ToInt32(_currentPos.Y), Convert.ToInt32(_currentPos.X)].Image, (GetBlankImageIndex().X + 1) * IMAGE_WIDTH - IMAGE_WIDTH);
                     Canvas.SetTop(ArrayImage[Convert.ToInt32(_currentPos.Y), Convert.ToInt32(_currentPos.X)].Image, (GetBlankImageIndex().Y + 1) * IMAGE_WIDTH - IMAGE_WIDTH);
                 }
+                else if (!checkInsideCanvas(position))
+                {
+                    var newX = dx - START_POINT.X - IMAGE_WIDTH / 2;
+                    var newY = dy - START_POINT.Y - IMAGE_HEIGHT / 2;
+
+                    if (dx - START_POINT.X - IMAGE_WIDTH / 2 < 0)
+                    {
+                        newX = 0 ;
+                    }
+                    if (dx + IMAGE_WIDTH / 2 >= START_POINT.X + 3 * IMAGE_WIDTH + 15)
+                    {
+                        newX = START_POINT.X + 2 * IMAGE_WIDTH + 15;
+                    }
+                    if (dy - START_POINT.Y - IMAGE_HEIGHT / 2 < 0)
+                    {
+                        newY = 0;
+                    }
+                    if (dy + IMAGE_HEIGHT / 2 >= START_POINT.Y + 3 * IMAGE_HEIGHT + 15)
+                    {
+                        newY = START_POINT.Y + 2 * IMAGE_HEIGHT - 30;
+                    }
+
+
+
+
+                    Canvas.SetLeft(ArrayImage[Convert.ToInt32(_currentPos.Y), Convert.ToInt32(_currentPos.X)].Image, newX);
+                    Canvas.SetTop(ArrayImage[Convert.ToInt32(_currentPos.Y), Convert.ToInt32(_currentPos.X)].Image, newY);
+                }
                 else
                 {
                     Canvas.SetLeft(ArrayImage[Convert.ToInt32(_currentPos.Y), Convert.ToInt32(_currentPos.X)].Image, dx - START_POINT.X - IMAGE_WIDTH / 2);
-                    Canvas.SetTop(ArrayImage[Convert.ToInt32(_currentPos.Y), Convert.ToInt32(_currentPos.X)].Image, dy - START_POINT.Y - IMAGE_WIDTH / 2);
+                    Canvas.SetTop(ArrayImage[Convert.ToInt32(_currentPos.Y), Convert.ToInt32(_currentPos.X)].Image, dy - START_POINT.Y - IMAGE_HEIGHT / 2);
                 }
             }
+        }
+
+        private bool checkInsideCanvas(Point pos)
+        {
+            var dx = pos.X;
+            var dy = pos.Y;
+
+            if (dx - START_POINT.X-IMAGE_WIDTH/2 >= 0)
+            {
+                if (dx + IMAGE_WIDTH/2 <= START_POINT.X + 3 * IMAGE_WIDTH + 15)
+                {
+                    if (dy - START_POINT.Y-IMAGE_HEIGHT/2 >= 0)
+                    {
+                        if (dy + IMAGE_HEIGHT/2 <= START_POINT.Y + 3 * IMAGE_HEIGHT + 15)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
         }
 
         private bool checkSnap(Point pos)
@@ -275,7 +328,7 @@ namespace _8_Puzzle
             var dx = pos.X;
             var dy = pos.Y;
 
-            if (dx - START_POINT.X - IMAGE_WIDTH / 2 >= ((GetBlankImageIndex().X + 1) * IMAGE_WIDTH - IMAGE_WIDTH) - IMAGE_WIDTH/4)
+            if (dx - START_POINT.X - IMAGE_WIDTH / 2 >= ((GetBlankImageIndex().X + 1) * IMAGE_WIDTH - IMAGE_WIDTH) - IMAGE_WIDTH / 4)
             {
                 if (dx - START_POINT.X - IMAGE_WIDTH / 2 <= ((GetBlankImageIndex().X + 1) * IMAGE_WIDTH - IMAGE_WIDTH) + IMAGE_WIDTH / 4)
                 {
@@ -299,6 +352,7 @@ namespace _8_Puzzle
             T temp = array[Convert.ToInt32(a.Y), Convert.ToInt32(a.X)];
             array[Convert.ToInt32(a.Y), Convert.ToInt32(a.X)] = array[Convert.ToInt32(b.Y), Convert.ToInt32(b.X)];
             array[Convert.ToInt32(b.Y), Convert.ToInt32(b.X)] = temp;
+
 
             //int lengthRow = ArrayImage.GetLength(0);
             //int lengthColumn = ArrayImage.GetLength(1);
