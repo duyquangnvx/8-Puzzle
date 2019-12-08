@@ -59,3 +59,34 @@ D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\obj\Debug\8-Puzzle.csproj.CopyComp
 D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\obj\Debug\8-Puzzle.exe
 D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\obj\Debug\8-Puzzle.pdb
 D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\bin\Debug\Image\templateImage.jpg
+E:\Code\Nam3_2019\Windows\Project2\8-Puzzle\bin\Debug\Image\templateImage.jpg
+E:\Code\Nam3_2019\Windows\Project2\8-Puzzle\bin\Debug\8-Puzzle.exe.config
+E:\Code\Nam3_2019\Windows\Project2\8-Puzzle\bin\Debug\8-Puzzle.exe
+E:\Code\Nam3_2019\Windows\Project2\8-Puzzle\bin\Debug\8-Puzzle.pdb
+E:\Code\Nam3_2019\Windows\Project2\8-Puzzle\bin\Debug\MaterialDesignColors.dll
+E:\Code\Nam3_2019\Windows\Project2\8-Puzzle\bin\Debug\MaterialDesignThemes.Wpf.dll
+E:\Code\Nam3_2019\Windows\Project2\8-Puzzle\bin\Debug\Microsoft.Expression.Interactions.dll
+E:\Code\Nam3_2019\Windows\Project2\8-Puzzle\bin\Debug\System.Windows.Interactivity.dll
+E:\Code\Nam3_2019\Windows\Project2\8-Puzzle\bin\Debug\MaterialDesignColors.pdb
+E:\Code\Nam3_2019\Windows\Project2\8-Puzzle\bin\Debug\MaterialDesignThemes.Wpf.pdb
+E:\Code\Nam3_2019\Windows\Project2\8-Puzzle\bin\Debug\MaterialDesignThemes.Wpf.xml
+E:\Code\Nam3_2019\Windows\Project2\8-Puzzle\bin\Debug\Microsoft.Expression.Interactions.xml
+E:\Code\Nam3_2019\Windows\Project2\8-Puzzle\bin\Debug\System.Windows.Interactivity.xml
+E:\Code\Nam3_2019\Windows\Project2\8-Puzzle\obj\Debug\8-Puzzle.csprojAssemblyReference.cache
+E:\Code\Nam3_2019\Windows\Project2\8-Puzzle\obj\Debug\MainWindow.g.cs
+E:\Code\Nam3_2019\Windows\Project2\8-Puzzle\obj\Debug\UC\ControlBarUC.g.cs
+E:\Code\Nam3_2019\Windows\Project2\8-Puzzle\obj\Debug\App.g.cs
+E:\Code\Nam3_2019\Windows\Project2\8-Puzzle\obj\Debug\GeneratedInternalTypeHelper.g.cs
+E:\Code\Nam3_2019\Windows\Project2\8-Puzzle\obj\Debug\8-Puzzle_MarkupCompile.cache
+E:\Code\Nam3_2019\Windows\Project2\8-Puzzle\obj\Debug\8-Puzzle_MarkupCompile.lref
+E:\Code\Nam3_2019\Windows\Project2\8-Puzzle\obj\Debug\App.baml
+E:\Code\Nam3_2019\Windows\Project2\8-Puzzle\obj\Debug\MainWindow.baml
+E:\Code\Nam3_2019\Windows\Project2\8-Puzzle\obj\Debug\Resource\Resource.baml
+E:\Code\Nam3_2019\Windows\Project2\8-Puzzle\obj\Debug\UC\ControlBarUC.baml
+E:\Code\Nam3_2019\Windows\Project2\8-Puzzle\obj\Debug\8-Puzzle.g.resources
+E:\Code\Nam3_2019\Windows\Project2\8-Puzzle\obj\Debug\_8_Puzzle.Properties.Resources.resources
+E:\Code\Nam3_2019\Windows\Project2\8-Puzzle\obj\Debug\8-Puzzle.csproj.GenerateResource.cache
+E:\Code\Nam3_2019\Windows\Project2\8-Puzzle\obj\Debug\8-Puzzle.csproj.CoreCompileInputs.cache
+E:\Code\Nam3_2019\Windows\Project2\8-Puzzle\obj\Debug\8-Puzzle.csproj.CopyComplete
+E:\Code\Nam3_2019\Windows\Project2\8-Puzzle\obj\Debug\8-Puzzle.exe
+E:\Code\Nam3_2019\Windows\Project2\8-Puzzle\obj\Debug\8-Puzzle.pdb

@@ -19,6 +19,9 @@
         ResizeMode="NoResize"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"  
+        
+ 
+        MouseMove="Window_MouseMove"
 
         Name="MainWd"
         Title="8 Puzzle" Height="700" Width="1050">
@@ -44,7 +47,7 @@
 
                 <!-- Canvas Chứa 9 hình -->
                 <Canvas x:Name="ImagesCanvas"
-                        
+                            
                         Grid.Row="0" Margin="10">
                     <Canvas.Resources>
                         <Style TargetType="Image">
@@ -52,13 +55,7 @@
                             <Setter Property="MaxHeight" Value="200"/>
                         </Style>
                     </Canvas.Resources>
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseLeftButtonDown">
-                            <i:InvokeCommandAction Command="{Binding MouseMoveImageCommand}"
-                                                   />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                    
+
                     <Image x:Name="previewImage"/>
                 </Canvas>
 
