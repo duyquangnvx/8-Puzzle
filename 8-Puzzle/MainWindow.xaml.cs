@@ -1,4 +1,6 @@
-﻿using _8_Puzzle.ViewModel;
+﻿using _8_Puzzle.Dialog;
+using _8_Puzzle.ViewModel;
+using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -37,7 +39,7 @@ namespace _8_Puzzle
         private Random _random = null;
         private double _progressValue;
         private double _progressMaximum;
-
+        Thread _progress = null;
 
         public Point _currentPos;
         #endregion
@@ -119,19 +121,29 @@ namespace _8_Puzzle
                     GameState = GAME_RUNNING;
 
                     // Bộ đếm giờ, ProgressMaximun = 3 phút
-                    Thread progress = new Thread(() =>
+                    _progress = new Thread(async () =>
                     {
-                        for (double num = 0.0; num < ProgressMaximum; num += 100.0)
+                        for (ProgressValue = 0.0; ProgressValue < ProgressMaximum; ProgressValue += 100.0)
                         {
                             Thread.Sleep(TimeSpan.FromMilliseconds(100.0));
-                            ProgressValue += 100.0;
                         }
 
-                        // Hết giờ => game over
+                        // Hết giờ => game over                      
                         GameState = GAME_OVER;
+
+                        Application.Current.Dispatcher.Invoke((Action)async delegate
+                        {
+                            var result = await DialogHost.Show(new GameOverDialog("Thua rồi haha :)))"), "MainDialog");
+                            if ((bool)result)
+                            {
+                                GameState = GAME_READY;
+                            }
+
+                        });                       
+             
                     });
-                    progress.IsBackground = true;
-                    progress.Start();
+                    _progress.IsBackground = true;
+                    _progress.Start();
                 }
             });
         }
@@ -174,6 +186,11 @@ namespace _8_Puzzle
 
         private void CropImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (GameState != GAME_RUNNING)
+            {
+                return;
+            }
+
             var position = e.GetPosition(this);
 
             _currentPos.X = ((int)(position.X - START_POINT.X) / (IMAGE_WIDTH));
@@ -191,8 +208,7 @@ namespace _8_Puzzle
                 isDragging = true;
                 Canvas.SetZIndex(ArrayImage[Convert.ToInt32(_currentPos.Y), Convert.ToInt32(_currentPos.X)].Image, 1);
             }
-
-
+                     
         }
 
         private void CropImage_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -205,24 +221,9 @@ namespace _8_Puzzle
                 isDragging = false;
                 Mouse.OverrideCursor = Cursors.Arrow;
 
-                //var animation = new DoubleAnimation();
-                //animation.From = 200;
-                //animation.To = 300;
-                //animation.Duration = new Duration(TimeSpan.FromSeconds(1));
-                //animation.AutoReverse = true;
-                //animation.RepeatBehavior = RepeatBehavior.Forever;
-
-
-                //var story = new Storyboard();
-                //story.Children.Add(animation);
-                //Storyboard.SetTargetName(animation, ArrayImage[Convert.ToInt32(_currentPos.Y), Convert.ToInt32(_currentPos.X)].Image.Name);
-                //Storyboard.SetTargetProperty(animation, new PropertyPath(Canvas.LeftProperty));
-                //story.Begin(this);
 
                 var position = e.GetPosition(this);
 
-                //int x = (int)(position.X - startX) / (width + 2) * (width + 2) + startX;
-                //int y = (int)(position.Y - startY) / (height + 2) * (height + 2) + startY;
 
 
                 if (checkSnap(position))
@@ -250,7 +251,7 @@ namespace _8_Puzzle
 
         }
 
-        private void Window_MouseMove(object sender, MouseEventArgs e)
+        private async void Window_MouseMove(object sender, MouseEventArgs e)
         {
 
             if (isDragging)
@@ -288,9 +289,6 @@ namespace _8_Puzzle
                         newY = START_POINT.Y + 2 * IMAGE_HEIGHT - 30;
                     }
 
-
-
-
                     Canvas.SetLeft(ArrayImage[Convert.ToInt32(_currentPos.Y), Convert.ToInt32(_currentPos.X)].Image, newX);
                     Canvas.SetTop(ArrayImage[Convert.ToInt32(_currentPos.Y), Convert.ToInt32(_currentPos.X)].Image, newY);
                 }
@@ -298,6 +296,18 @@ namespace _8_Puzzle
                 {
                     Canvas.SetLeft(ArrayImage[Convert.ToInt32(_currentPos.Y), Convert.ToInt32(_currentPos.X)].Image, dx - START_POINT.X - IMAGE_WIDTH / 2);
                     Canvas.SetTop(ArrayImage[Convert.ToInt32(_currentPos.Y), Convert.ToInt32(_currentPos.X)].Image, dy - START_POINT.Y - IMAGE_HEIGHT / 2);
+                    // Checkwin
+                    if (checkWin())
+                    {
+                        GameState = GAME_OVER;
+                        _progress.Abort();
+                        var result = await DialogHost.Show(new GameOverDialog("Chúc mừng, bạn đã phá đảo thành công 8 Puzzle !"), "MainDialog");
+
+                        if ((bool)result)
+                        {
+                            GameState = GAME_READY;
+                        }
+                    }
                 }
             }
         }
@@ -365,16 +375,6 @@ namespace _8_Puzzle
             array[Convert.ToInt32(b.Y), Convert.ToInt32(b.X)] = temp;
 
 
-            //int lengthRow = ArrayImage.GetLength(0);
-            //int lengthColumn = ArrayImage.GetLength(1);
-            //for (int i = 0; i < lengthRow; i++)
-            //{
-            //    for (int j = 0; j < lengthColumn; j++)
-            //    {
-            //        Canvas.SetLeft(ArrayImage[i, j].Image, j * (IMAGE_WIDTH));
-            //        Canvas.SetTop(ArrayImage[i, j].Image, i * (IMAGE_HEIGHT));
-            //    }
-            //}
         }
 
         private void Shuffle<T>(T[,] array, Random random)
@@ -511,8 +511,11 @@ namespace _8_Puzzle
 
         
 
-        private void Window_KeyDown(object sender, KeyEventArgs e)
+        private async void Window_KeyDown(object sender, KeyEventArgs e)
         {
+            if (GameState != GAME_RUNNING)
+                return;
+
             Point blankPos = new Point();
             blankPos = GetBlankImageIndex();
             Point currentKeyPos = new Point();
@@ -567,6 +570,8 @@ namespace _8_Puzzle
                 var selectedImage = ArrayImage[oldY, oldX].Image;
                 var animation_left = new DoubleAnimation(oldX * IMAGE_HEIGHT, newX * IMAGE_HEIGHT, TimeSpan.FromSeconds(0.3f));
                 var animation_top = new DoubleAnimation(oldY * IMAGE_WIDTH, newY * IMAGE_WIDTH, TimeSpan.FromSeconds(0.3f));
+                animation_left.FillBehavior = FillBehavior.Stop;
+                animation_top.FillBehavior = FillBehavior.Stop;
 
                 var story = new Storyboard();
                 story.Children.Add(animation_left);
@@ -578,11 +583,34 @@ namespace _8_Puzzle
                 Storyboard.SetTargetProperty(animation_top, new PropertyPath(Canvas.TopProperty));
                 story.Begin(this);
 
+                ImagesCanvas.Children.Remove(selectedImage);
+
+       
+                ImagesCanvas.Children.Add(selectedImage);
+                Canvas.SetLeft(selectedImage, newX * IMAGE_WIDTH);
+                Canvas.SetTop(selectedImage, newY * IMAGE_HEIGHT);
+                Canvas.SetTop(selectedImage, newY * IMAGE_HEIGHT);
                 // clear animation
-                selectedImage.RenderTransform = new TranslateTransform();
+                //selectedImage.RenderTransform = new TranslateTransform();
 
                 changePos(ArrayImage, blankPos, currentKeyPos);
+
+
+                // Checkwin
+                if (checkWin())
+                {
+                    GameState = GAME_OVER;
+                    _progress.Abort();
+                    var result = await DialogHost.Show(new GameOverDialog("Chúc mừng, bạn đã phá đảo thành công 8 Puzzle !"), "MainDialog");                 
+
+                    if ((bool)result)
+                    {
+                        GameState = GAME_READY;
+                        
+                    }
+                }
             }
+
         }
     }
 }

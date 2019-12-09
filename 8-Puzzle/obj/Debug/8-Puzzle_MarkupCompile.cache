@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\App.xaml
-31205864258
+4-392309255
 
-91261943138
+10-977901853
 17-839420856
-MainWindow.xaml;Resource\Resource.xaml;UC\ControlBarUC.xaml;
+Dialog\GameOverDialog.xaml;MainWindow.xaml;Resource\Resource.xaml;UC\ControlBarUC.xaml;
 
 False
 

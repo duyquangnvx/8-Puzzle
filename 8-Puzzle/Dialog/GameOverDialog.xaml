@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="_8_Puzzle.Dialog.GameOverDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:_8_Puzzle.Dialog"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="13"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             Background="{DynamicResource MaterialDesignPaper}"
+             FontFamily="{DynamicResource MaterialDesignFont}"
+             mc:Ignorable="d" 
+             
+             MinWidth="400"
+             MaxWidth="800"
+             MinHeight="120"
+             Padding="30 0 30 0"
+            >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="{Binding Title}" 
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   FontWeight="Bold"
+                   Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
+        <Button Grid.Row="1"
+                IsDefault="True"
+                    Width="100"
+                    Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                    Margin="0 0 10 0"
+                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                    CommandParameter="{StaticResource True}"
+                    Content="OK">
+        </Button>
+    </Grid>
+</UserControl>
