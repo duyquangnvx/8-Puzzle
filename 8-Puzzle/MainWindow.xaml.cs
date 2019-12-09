@@ -30,6 +30,7 @@ namespace _8_Puzzle
         private MyImage[,] _arrayImage;
         private int _canvasHeight;
         private int _canvasWidth;
+        private Storyboard _storyboard;
         // Vị trí hình trống: X - dòng, Y - cột
         private Point _blankImagePosition;
         private string _templateImagePath;
@@ -83,6 +84,8 @@ namespace _8_Puzzle
 
             // Sự kiện
             InitCommand();
+
+            _storyboard = new Storyboard();
 
             // Default 
             GameState = GAME_READY;
@@ -440,42 +443,41 @@ namespace _8_Puzzle
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        
+
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-
             Point blankPos = new Point();
             blankPos = GetBlankImageIndex();
+            Point currentKeyPos = new Point();
+
+            bool check = false;
 
             if (e.Key == Key.Up || e.Key == Key.W)
             {
                 if (blankPos.Y < 2)
                 {
-                    Point currentKeyPos = new Point();
                     currentKeyPos.X = blankPos.X;
                     currentKeyPos.Y = blankPos.Y + 1;
-                    changePos(ArrayImage, blankPos, currentKeyPos);
-
+                    check = true;
                 }
             }
             else if (e.Key == Key.Down || e.Key == Key.S)
             {
                 if (blankPos.Y > 0)
                 {
-                    Point currentKeyPos = new Point();
                     currentKeyPos.X = blankPos.X;
                     currentKeyPos.Y = blankPos.Y - 1;
-                    changePos(ArrayImage, blankPos, currentKeyPos);
-
+                    check = true;
                 }
             }
             else if (e.Key == Key.Right || e.Key == Key.D)
             {
                 if (blankPos.X > 0)
                 {
-                    Point currentKeyPos = new Point();
                     currentKeyPos.X = blankPos.X-1;
                     currentKeyPos.Y = blankPos.Y;
-                    changePos(ArrayImage, blankPos, currentKeyPos);
+                    check = true;
 
                 }
             }
@@ -483,34 +485,38 @@ namespace _8_Puzzle
             {
                 if (blankPos.X < 2)
                 {
-                    Point currentKeyPos = new Point();
                     currentKeyPos.X = blankPos.X + 1;
                     currentKeyPos.Y = blankPos.Y;
-                    changePos(ArrayImage, blankPos, currentKeyPos);
-
+                    check = true;
                 }
             }
 
-            int lengthRow = ArrayImage.GetLength(0);
-            int lengthColumn = ArrayImage.GetLength(1);
-            for (int i = 0; i < lengthRow; i++)
+            if (check)
             {
-                for (int j = 0; j < lengthColumn; j++)
-                {
-                    Canvas.SetLeft(ArrayImage[i, j].Image, j * (IMAGE_WIDTH));
-                    Canvas.SetTop(ArrayImage[i, j].Image, i * (IMAGE_HEIGHT));
-                }
+                int oldX = (int)currentKeyPos.X;
+                int oldY = (int)currentKeyPos.Y;
+                int newX = (int)blankPos.X;
+                int newY = (int)blankPos.Y;
+
+                var selectedImage = ArrayImage[oldY, oldX].Image;
+                var animation_left = new DoubleAnimation(oldX * IMAGE_HEIGHT, newX * IMAGE_HEIGHT, TimeSpan.FromSeconds(0.3f));
+                var animation_top = new DoubleAnimation(oldY * IMAGE_WIDTH, newY * IMAGE_WIDTH, TimeSpan.FromSeconds(0.3f));
+
+                var story = new Storyboard();
+                story.Children.Add(animation_left);
+                story.Children.Add(animation_top);
+
+                Storyboard.SetTarget(animation_left, selectedImage);
+                Storyboard.SetTarget(animation_top, selectedImage);
+                Storyboard.SetTargetProperty(animation_left, new PropertyPath(Canvas.LeftProperty));
+                Storyboard.SetTargetProperty(animation_top, new PropertyPath(Canvas.TopProperty));
+                story.Begin(this);
+
+                // clear animation
+                selectedImage.RenderTransform = new TranslateTransform();
+
+                changePos(ArrayImage, blankPos, currentKeyPos);
             }
-
-            //int distanceX, distanceY;
-            //distanceX = Convert.ToInt32(_currentPos.X) - Convert.ToInt32(blankPos.X);
-            //distanceY = Convert.ToInt32(_currentPos.Y) - Convert.ToInt32(blankPos.Y);
-
-            //if (distanceX >= -1 && distanceX <= 1 && distanceY == 0 || distanceY >= -1 && distanceY <= 1 && distanceX == 0)
-            //{
-            //    isDragging = true;
-            //    Canvas.SetZIndex(ArrayImage[Convert.ToInt32(_currentPos.Y), Convert.ToInt32(_currentPos.X)].Image, 1);
-            //}
         }
     }
 }
