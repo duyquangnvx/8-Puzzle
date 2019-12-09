@@ -183,12 +183,7 @@ namespace _8_Puzzle
             distanceX = Convert.ToInt32(_currentPos.X) - Convert.ToInt32(blankPos.X);
             distanceY = Convert.ToInt32(_currentPos.Y) - Convert.ToInt32(blankPos.Y);
 
-            if (distanceX >= -1 && distanceX <= 1 && distanceY == 0)
-            {
-                isDragging = true;
-                Canvas.SetZIndex(ArrayImage[Convert.ToInt32(_currentPos.Y), Convert.ToInt32(_currentPos.X)].Image, 1);
-            }
-            else if (distanceY >= -1 && distanceY <= 1 && distanceX == 0)
+            if (distanceX >= -1 && distanceX <= 1 && distanceY == 0 || distanceY >= -1 && distanceY <= 1 && distanceX == 0)
             {
                 isDragging = true;
                 Canvas.SetZIndex(ArrayImage[Convert.ToInt32(_currentPos.Y), Convert.ToInt32(_currentPos.X)].Image, 1);
@@ -273,7 +268,7 @@ namespace _8_Puzzle
 
                     if (dx - START_POINT.X - IMAGE_WIDTH / 2 < 0)
                     {
-                        newX = 0 ;
+                        newX = 0;
                     }
                     if (dx + IMAGE_WIDTH / 2 >= START_POINT.X + 3 * IMAGE_WIDTH + 15)
                     {
@@ -307,13 +302,13 @@ namespace _8_Puzzle
             var dx = pos.X;
             var dy = pos.Y;
 
-            if (dx - START_POINT.X-IMAGE_WIDTH/2 >= 0)
+            if (dx - START_POINT.X - IMAGE_WIDTH / 2 >= 0)
             {
-                if (dx + IMAGE_WIDTH/2 <= START_POINT.X + 3 * IMAGE_WIDTH + 15)
+                if (dx + IMAGE_WIDTH / 2 <= START_POINT.X + 3 * IMAGE_WIDTH + 15)
                 {
-                    if (dy - START_POINT.Y-IMAGE_HEIGHT/2 >= 0)
+                    if (dy - START_POINT.Y - IMAGE_HEIGHT / 2 >= 0)
                     {
-                        if (dy + IMAGE_HEIGHT/2 <= START_POINT.Y + 3 * IMAGE_HEIGHT + 15)
+                        if (dy + IMAGE_HEIGHT / 2 <= START_POINT.Y + 3 * IMAGE_HEIGHT + 15)
                         {
                             return true;
                         }
@@ -445,6 +440,77 @@ namespace _8_Puzzle
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
 
+            Point blankPos = new Point();
+            blankPos = GetBlankImageIndex();
+
+            if (e.Key == Key.Up || e.Key == Key.W)
+            {
+                if (blankPos.Y < 2)
+                {
+                    Point currentKeyPos = new Point();
+                    currentKeyPos.X = blankPos.X;
+                    currentKeyPos.Y = blankPos.Y + 1;
+                    changePos(ArrayImage, blankPos, currentKeyPos);
+
+                }
+            }
+            else if (e.Key == Key.Down || e.Key == Key.S)
+            {
+                if (blankPos.Y > 0)
+                {
+                    Point currentKeyPos = new Point();
+                    currentKeyPos.X = blankPos.X;
+                    currentKeyPos.Y = blankPos.Y - 1;
+                    changePos(ArrayImage, blankPos, currentKeyPos);
+
+                }
+            }
+            else if (e.Key == Key.Right || e.Key == Key.D)
+            {
+                if (blankPos.X > 0)
+                {
+                    Point currentKeyPos = new Point();
+                    currentKeyPos.X = blankPos.X-1;
+                    currentKeyPos.Y = blankPos.Y;
+                    changePos(ArrayImage, blankPos, currentKeyPos);
+
+                }
+            }
+            else if (e.Key == Key.Left || e.Key == Key.A)
+            {
+                if (blankPos.X < 2)
+                {
+                    Point currentKeyPos = new Point();
+                    currentKeyPos.X = blankPos.X + 1;
+                    currentKeyPos.Y = blankPos.Y;
+                    changePos(ArrayImage, blankPos, currentKeyPos);
+
+                }
+            }
+
+            int lengthRow = ArrayImage.GetLength(0);
+            int lengthColumn = ArrayImage.GetLength(1);
+            for (int i = 0; i < lengthRow; i++)
+            {
+                for (int j = 0; j < lengthColumn; j++)
+                {
+                    Canvas.SetLeft(ArrayImage[i, j].Image, j * (IMAGE_WIDTH));
+                    Canvas.SetTop(ArrayImage[i, j].Image, i * (IMAGE_HEIGHT));
+                }
+            }
+
+            //int distanceX, distanceY;
+            //distanceX = Convert.ToInt32(_currentPos.X) - Convert.ToInt32(blankPos.X);
+            //distanceY = Convert.ToInt32(_currentPos.Y) - Convert.ToInt32(blankPos.Y);
+
+            //if (distanceX >= -1 && distanceX <= 1 && distanceY == 0 || distanceY >= -1 && distanceY <= 1 && distanceX == 0)
+            //{
+            //    isDragging = true;
+            //    Canvas.SetZIndex(ArrayImage[Convert.ToInt32(_currentPos.Y), Convert.ToInt32(_currentPos.X)].Image, 1);
+            //}
+        }
     }
 }

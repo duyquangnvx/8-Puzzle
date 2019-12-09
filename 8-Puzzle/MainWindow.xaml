@@ -22,6 +22,7 @@
         
  
         MouseMove="Window_MouseMove"
+        KeyDown="Window_KeyDown"
 
         Name="MainWd"
         Title="8 Puzzle" Height="700" Width="1050">
