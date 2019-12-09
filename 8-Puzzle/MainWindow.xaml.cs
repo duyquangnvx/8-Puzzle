@@ -240,6 +240,8 @@ namespace _8_Puzzle
                         Canvas.SetTop(ArrayImage[i, j].Image, i * (IMAGE_HEIGHT));
                     }
                 }
+
+                
             }
 
 
@@ -304,11 +306,11 @@ namespace _8_Puzzle
 
             if (dx - START_POINT.X - IMAGE_WIDTH / 2 >= 0)
             {
-                if (dx + IMAGE_WIDTH / 2 <= START_POINT.X + 3 * IMAGE_WIDTH + 15)
+                if (dx + IMAGE_WIDTH / 2 <= START_POINT.X + COLUMNS * IMAGE_WIDTH + 15)
                 {
                     if (dy - START_POINT.Y - IMAGE_HEIGHT / 2 >= 0)
                     {
-                        if (dy + IMAGE_HEIGHT / 2 <= START_POINT.Y + 3 * IMAGE_HEIGHT + 15)
+                        if (dy + IMAGE_HEIGHT / 2 <= START_POINT.Y + ROWS * IMAGE_HEIGHT + 15)
                         {
                             return true;
                         }
@@ -316,6 +318,17 @@ namespace _8_Puzzle
                 }
             }
             return false;
+        }
+
+        private bool checkWin()
+        {
+            for (int i = 0; i < ROWS; i++)
+                for (int j = 0; j < COLUMNS; j++)
+                {
+                    if (ArrayImage[i, j].Index != i * ROWS + j)
+                        return false;
+                }
+            return true;
         }
 
         private bool checkSnap(Point pos)
@@ -363,22 +376,82 @@ namespace _8_Puzzle
 
         private void Shuffle<T>(T[,] array, Random random)
         {
-            int lengthRow = array.GetLength(1);
+            //int lengthRow = array.GetLength(1);
 
-            for (int i = array.Length - 1; i > 0; i--)
+            //for (int i = array.Length - 1; i > 0; i--)
+            //{
+            //    int i0 = i / lengthRow;
+            //    int i1 = i % lengthRow;
+
+            //    int j = random.Next(i + 1);
+            //    int j0 = j / lengthRow;
+            //    int j1 = j % lengthRow;
+
+            //    T temp = array[i0, i1];
+            //    array[i0, i1] = array[j0, j1];
+            //    array[j0, j1] = temp;
+            //}
+
+
+            for (int i = 0; i<100;i++)
             {
-                int i0 = i / lengthRow;
-                int i1 = i % lengthRow;
+                int j = random.Next(4);
 
-                int j = random.Next(i + 1);
-                int j0 = j / lengthRow;
-                int j1 = j % lengthRow;
+                Point blankPos = new Point();
+                blankPos = GetBlankImageIndex();
+                if (j == 0)
+                {
+                    if (blankPos.Y < ROWS-1)
+                    {
 
-                T temp = array[i0, i1];
-                array[i0, i1] = array[j0, j1];
-                array[j0, j1] = temp;
+
+                        Point currentKeyPos = new Point();
+                        currentKeyPos.X = blankPos.X;
+                        currentKeyPos.Y = blankPos.Y + 1;
+                        changePos(ArrayImage, blankPos, currentKeyPos);
+
+                    }
+                }
+                else if (j == 1)
+                {
+                    if (blankPos.Y > 0)
+                    {
+                        Point currentKeyPos = new Point();
+                        currentKeyPos.X = blankPos.X;
+                        currentKeyPos.Y = blankPos.Y - 1;
+                        changePos(ArrayImage, blankPos, currentKeyPos);
+
+                    }
+                }
+                else if (j == 2)
+                {
+                    if (blankPos.X > 0)
+                    {
+                        Point currentKeyPos = new Point();
+                        currentKeyPos.X = blankPos.X - 1;
+                        currentKeyPos.Y = blankPos.Y;
+                        changePos(ArrayImage, blankPos, currentKeyPos);
+
+                    }
+                }
+                else if (j == 3)
+                {
+                    if (blankPos.X < COLUMNS-1)
+                    {
+                        Point currentKeyPos = new Point();
+                        currentKeyPos.X = blankPos.X + 1;
+                        currentKeyPos.Y = blankPos.Y;
+                        changePos(ArrayImage, blankPos, currentKeyPos);
+
+                    }
+                }
             }
+
+           
+
+            
         }
+        
 
         private void Display()
         {
@@ -420,13 +493,6 @@ namespace _8_Puzzle
         }
 
 
-        private bool CheckWin()
-        {
-            bool result = false;
-
-            return result;
-        }
-
         public class MyImage
         {
             public int Index { get; set; }  // Dựa vào Index để check win
@@ -448,7 +514,7 @@ namespace _8_Puzzle
 
             if (e.Key == Key.Up || e.Key == Key.W)
             {
-                if (blankPos.Y < 2)
+                if (blankPos.Y < ROWS-1)
                 {
                     Point currentKeyPos = new Point();
                     currentKeyPos.X = blankPos.X;
@@ -481,7 +547,7 @@ namespace _8_Puzzle
             }
             else if (e.Key == Key.Left || e.Key == Key.A)
             {
-                if (blankPos.X < 2)
+                if (blankPos.X < COLUMNS-1)
                 {
                     Point currentKeyPos = new Point();
                     currentKeyPos.X = blankPos.X + 1;
