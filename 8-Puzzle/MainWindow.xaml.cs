@@ -3,6 +3,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -56,6 +57,8 @@ namespace _8_Puzzle
 
         #region Command
         public ICommand NewGameCommand { get; set; }
+        public ICommand SaveGameCommand { get; set; }
+        public ICommand LoadGameCommand { get; set; }
         public ICommand MouseMoveImageCommand { get; set; }
         #endregion
 
@@ -129,7 +132,82 @@ namespace _8_Puzzle
                     });
                     progress.IsBackground = true;
                     progress.Start();
+
                 }
+            });
+            SaveGameCommand = new RelayCommand<Canvas>((p) => { return GameState == GAME_RUNNING; }, (p) =>
+            {
+                const string filename = "save.txt";
+                var writer = new StreamWriter(filename);
+                writer.WriteLine(TemplateImagePath);
+                writer.WriteLine(ProgressValue);
+
+                for (int i = 0; i < 3; i++)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        writer.Write($"{ArrayImage[i,j].Index}");
+                        if (j != 2)
+                        {
+                            writer.Write(" ");
+                        }
+
+                    }
+                    writer.WriteLine("");
+                }
+                writer.Close();
+
+                MessageBox.Show("Game is saved");
+                
+            });
+            LoadGameCommand = new RelayCommand<Canvas>((p) => { return GameState == GAME_READY; }, (p) =>
+            {
+            var screen = new OpenFileDialog();
+                if (screen.ShowDialog() == true)
+                {
+                    var filename = screen.FileName;
+
+                    var reader = new StreamReader(filename);
+                    TemplateImagePath = reader.ReadLine();
+                    ProgressValue = Convert.ToInt32(reader.ReadLine());
+                    int[,] temporaryArray = new int[ROWS, COLUMNS];
+                    int q;
+                    for (int currentRow = 0; currentRow < ROWS; currentRow++)
+                    {
+                        for (int currentColumn = 0; currentColumn < COLUMNS; currentColumn++)
+                        {
+                          
+                            temporaryArray[currentRow,currentColumn] = Convert.ToInt32(reader.Read()) - 48;
+                            q = reader.Read();
+                        }
+                        q = reader.Read();
+                    }
+                            ArrayImage = CropImage_LoadGame(TemplateImagePath,reader,temporaryArray);
+                    // Hiển thị lên canvas
+                    Display();
+
+                    // vị trí hình trống; X - dòng; Y cột
+                    _blankImagePosition = GetBlankImageIndex();
+
+                    GameState = GAME_RUNNING;
+
+                    // Bộ đếm giờ, ProgressMaximun = 3 phút
+                    Thread progress = new Thread(() =>
+                    {
+                        for (double num = 0.0; num < ProgressMaximum; num += 100.0)
+                        {
+                            Thread.Sleep(TimeSpan.FromMilliseconds(100.0));
+                            ProgressValue += 100.0;
+                        }
+
+                        // Hết giờ => game over
+                        GameState = GAME_OVER;
+                    });
+                    progress.IsBackground = true;
+                    progress.Start();
+
+                }
+
             });
         }
 
@@ -168,7 +246,53 @@ namespace _8_Puzzle
 
             return images;
         }
+        private MyImage[,] CropImage_LoadGame(string imagePath,StreamReader reader, int[,] array)
+        {
+            var imageSource = new BitmapImage(new Uri(imagePath, UriKind.RelativeOrAbsolute));
 
+            int cropHeight = imageSource.PixelHeight / ROWS;
+            int cropWidth = imageSource.PixelWidth / COLUMNS;
+
+
+            MyImage[,] images = new MyImage[ROWS, COLUMNS];
+
+            for (int currentRow = 0; currentRow < ROWS; currentRow++)
+            {
+                for (int currentColumn = 0; currentColumn < COLUMNS; currentColumn++)
+                {
+                    var rect = new Int32Rect(currentColumn * cropWidth, currentRow * cropHeight, cropWidth, cropHeight);
+                    var croppedBitmap = new CroppedBitmap(imageSource, rect);
+                    var croppedImage = new Image();
+                    croppedImage.Stretch = Stretch.Fill;
+                    croppedImage.Width = cropWidth;
+                    croppedImage.Height = cropHeight;
+                    croppedImage.Source = croppedBitmap;
+                    for(int i=0;i<ROWS;i++)
+                    {
+                        for(int j=0;j<COLUMNS;j++)
+                        {
+                            if(currentRow * ROWS + currentColumn == array[i,j])
+                            {
+                                images[i, j] = new MyImage { Index = array[i, j], Image = croppedImage };
+                                images[i, j].Image.MouseLeftButtonDown += CropImage_MouseLeftButtonDown;
+                                images[i, j].Image.MouseLeftButtonUp += CropImage_PreviewMouseLeftButtonUp;
+
+                                Canvas.SetZIndex(images[i, j].Image, 0);
+                            }
+                            if(currentRow * ROWS + currentColumn == array[i, j] && array[i,j]==8)
+                            {
+                    
+                                images[i,j].Image.Source = null;
+                            }
+                        }
+                    }
+                }
+            }
+
+            
+
+            return images;
+        }
         private void CropImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var position = e.GetPosition(this);
@@ -451,8 +575,7 @@ namespace _8_Puzzle
 
             
         }
-        
-
+      
         private void Display()
         {
             int lengthRow = ArrayImage.GetLength(0);

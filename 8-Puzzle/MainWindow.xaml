@@ -90,6 +90,10 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                    </Grid.RowDefinitions>
 
                     <Button Margin="10"
                             Background="#FF6F96E4" 
@@ -102,7 +106,31 @@
                             <TextBlock Text="NEW GAME" HorizontalAlignment="Center"></TextBlock>
                         </Grid>
                     </Button>
-
+                    <Button Margin="10"
+                            Background="#FF6F96E4" 
+                            BorderBrush="#FF6F96E4"
+                            Command="{Binding SaveGameCommand}"
+                            CommandParameter="{Binding ElementName=ImagesCanvas}"
+                            Grid.Column="1"
+                            >
+                        <Grid Width="150">
+                            <materialDesign:PackIcon  VerticalAlignment="Center"/>
+                            <TextBlock Text="SAVE GAME" HorizontalAlignment="Center"></TextBlock>
+                        </Grid>
+                    </Button>
+                    <Button Margin="10"
+                            Background="#FF6F96E4" 
+                            BorderBrush="#FF6F96E4"
+                            Command="{Binding LoadGameCommand}"
+                            CommandParameter="{Binding ElementName=ImagesCanvas}"
+                            Grid.Column="1"
+                            Grid.Row="1"
+                            >
+                        <Grid Width="150">
+                            <materialDesign:PackIcon VerticalAlignment="Center"/>
+                            <TextBlock Text="LOAD GAME" HorizontalAlignment="Center"></TextBlock>
+                        </Grid>
+                    </Button>
                 </Grid>
 
             </StackPanel>
