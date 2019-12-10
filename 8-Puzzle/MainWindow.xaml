@@ -89,11 +89,23 @@
                         <Image Margin="5" Source="{Binding TemplateImagePath}" Stretch="Fill"/>
                     </materialDesign:Card>
 
+<<<<<<< HEAD
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
+=======
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                    </Grid.RowDefinitions>
+>>>>>>> origin/SaveLoad
 
                         <Button Margin="10"
                             Background="#FF6F96E4" 
@@ -101,6 +113,7 @@
                             Command="{Binding NewGameCommand}"
                             CommandParameter="{Binding ElementName=ImagesCanvas}"
                             >
+<<<<<<< HEAD
                             <Grid Width="150">
                                 <materialDesign:PackIcon Kind="GamepadVariant" VerticalAlignment="Center"/>
                                 <TextBlock Text="NEW GAME" HorizontalAlignment="Center"></TextBlock>
@@ -108,6 +121,39 @@
                         </Button>
 
                     </Grid>
+=======
+                        <Grid Width="150">
+                            <materialDesign:PackIcon Kind="GamepadVariant" VerticalAlignment="Center"/>
+                            <TextBlock Text="NEW GAME" HorizontalAlignment="Center"></TextBlock>
+                        </Grid>
+                    </Button>
+                    <Button Margin="10"
+                            Background="#FF6F96E4" 
+                            BorderBrush="#FF6F96E4"
+                            Command="{Binding SaveGameCommand}"
+                            CommandParameter="{Binding ElementName=ImagesCanvas}"
+                            Grid.Column="1"
+                            >
+                        <Grid Width="150">
+                            <materialDesign:PackIcon  VerticalAlignment="Center"/>
+                            <TextBlock Text="SAVE GAME" HorizontalAlignment="Center"></TextBlock>
+                        </Grid>
+                    </Button>
+                    <Button Margin="10"
+                            Background="#FF6F96E4" 
+                            BorderBrush="#FF6F96E4"
+                            Command="{Binding LoadGameCommand}"
+                            CommandParameter="{Binding ElementName=ImagesCanvas}"
+                            Grid.Column="1"
+                            Grid.Row="1"
+                            >
+                        <Grid Width="150">
+                            <materialDesign:PackIcon VerticalAlignment="Center"/>
+                            <TextBlock Text="LOAD GAME" HorizontalAlignment="Center"></TextBlock>
+                        </Grid>
+                    </Button>
+                </Grid>
+>>>>>>> origin/SaveLoad
 
                 </StackPanel>
 

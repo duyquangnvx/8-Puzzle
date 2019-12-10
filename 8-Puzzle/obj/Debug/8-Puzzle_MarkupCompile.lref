@@ -1,7 +1,14 @@
 ﻿
+<<<<<<< HEAD
 FE:\Code\Nam3_2019\Windows\Project2.1\8-Puzzle\App.xaml;;
 FE:\Code\Nam3_2019\Windows\Project2.1\8-Puzzle\Dialog\GameOverDialog.xaml;;
 FE:\Code\Nam3_2019\Windows\Project2.1\8-Puzzle\MainWindow.xaml;;
 FE:\Code\Nam3_2019\Windows\Project2.1\8-Puzzle\Resource\Resource.xaml;;
 FE:\Code\Nam3_2019\Windows\Project2.1\8-Puzzle\UC\ControlBarUC.xaml;;
+=======
+FD:\Homework\windows\puzzle\8-Puzzle\App.xaml;;
+FD:\Homework\windows\puzzle\8-Puzzle\MainWindow.xaml;;
+FD:\Homework\windows\puzzle\8-Puzzle\Resource\Resource.xaml;;
+FD:\Homework\windows\puzzle\8-Puzzle\UC\ControlBarUC.xaml;;
+>>>>>>> origin/SaveLoad
 
