@@ -123,3 +123,5 @@ E:\Code\Nam3_2019\Windows\Project2.1\8-Puzzle\obj\Debug\8-Puzzle.exe
 E:\Code\Nam3_2019\Windows\Project2.1\8-Puzzle\obj\Debug\8-Puzzle.pdb
 D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\obj\Debug\Dialog\GameOverDialog.g.cs
 D:\Deadline Trên Lớp\Git\8-Puzzle\8-Puzzle\obj\Debug\Dialog\GameOverDialog.baml
+E:\Code\Nam3_2019\Windows\Project2.1\8-Puzzle\obj\Debug\Dialog\GameOverDialog.g.cs
+E:\Code\Nam3_2019\Windows\Project2.1\8-Puzzle\obj\Debug\Dialog\GameOverDialog.baml
